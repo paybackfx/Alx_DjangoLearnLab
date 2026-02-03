@@ -1,0 +1,32 @@
+{% comment %}
+Book List Template
+Security: Uses Django's autoescape to prevent XSS attacks.
+All user-generated content is automatically escaped.
+{% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book List</title>
+</head>
+
+<body>
+    <h1>Book List</h1>
+
+    <ul>
+        {% for book in books %}
+        <li>
+            {# Django automatically escapes output to prevent XSS #}
+            <strong>{{ book.title }}</strong> by {{ book.author.name }}
+        </li>
+        {% empty %}
+        <li>No books available.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'add_book' %}">Add New Book</a>
+</body>
+
+</html>
