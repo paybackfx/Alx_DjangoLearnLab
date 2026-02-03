@@ -126,7 +126,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # ==================== CUSTOM USER MODEL ====================
 # Use custom user model with date_of_birth and profile_photo fields
-AUTH_USER_MODEL = 'relationship_app.CustomUser'
+AUTH_USER_MODEL = 'bookshelf.CustomUser'
 
 
 # ==================== AUTHENTICATION SETTINGS ====================
