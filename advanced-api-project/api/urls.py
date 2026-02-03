@@ -8,8 +8,8 @@ URL Patterns:
     - /books/            - List all books (GET) 
     - /books/<int:pk>/   - Retrieve a specific book (GET)
     - /books/create/     - Create a new book (POST)
-    - /books/<int:pk>/update/  - Update a book (PUT/PATCH)
-    - /books/<int:pk>/delete/  - Delete a book (DELETE)
+    - /books/update/<int:pk>/  - Update a book (PUT/PATCH)
+    - /books/delete/<int:pk>/  - Delete a book (DELETE)
 """
 
 from django.urls import path
@@ -32,8 +32,8 @@ urlpatterns = [
     path('books/create/', BookCreateView.as_view(), name='book-create'),
     
     # Update an existing book - requires authentication
-    path('books/<int:pk>/update/', BookUpdateView.as_view(), name='book-update'),
+    path('books/update/<int:pk>/', BookUpdateView.as_view(), name='book-update'),
     
     # Delete a book - requires authentication
-    path('books/<int:pk>/delete/', BookDeleteView.as_view(), name='book-delete'),
+    path('books/delete/<int:pk>/', BookDeleteView.as_view(), name='book-delete'),
 ]
