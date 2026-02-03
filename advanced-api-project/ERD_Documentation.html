@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERD - Advanced API Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            max-width: 900px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+        .erd-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+        .table {
+            border: 2px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            min-width: 220px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .table-header {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: white;
+            padding: 15px 20px;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+        }
+        .table-body {
+            background: white;
+        }
+        .table-row {
+            padding: 12px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .table-row:last-child {
+            border-bottom: none;
+        }
+        .key-badge {
+            background: #FFC107;
+            color: #333;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        .key-badge.fk {
+            background: #4CAF50;
+            color: white;
+        }
+        .field-name {
+            font-weight: 500;
+            color: #333;
+        }
+        .field-type {
+            color: #888;
+            font-size: 13px;
+            margin-left: auto;
+        }
+        .relationship {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        .relationship-line {
+            width: 80px;
+            height: 3px;
+            background: #333;
+            position: relative;
+        }
+        .relationship-line::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: -4px;
+            width: 12px;
+            height: 12px;
+            border: 3px solid #333;
+            border-radius: 50%;
+            background: white;
+        }
+        .relationship-line::after {
+            content: '';
+            position: absolute;
+            right: -5px;
+            top: -6px;
+            border-left: 15px solid #333;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+        }
+        .relationship-label {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+        .api-section {
+            margin-top: 30px;
+        }
+        .api-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2196F3;
+        }
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .api-table th {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .api-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        .api-table tr:hover {
+            background: #f5f5f5;
+        }
+        .method {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 12px;
+            color: white;
+        }
+        .method.get { background: #4CAF50; }
+        .method.post { background: #2196F3; }
+        .method.put { background: #FF9800; }
+        .method.delete { background: #f44336; }
+        .auth-yes { color: #4CAF50; font-weight: bold; }
+        .auth-no { color: #999; }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #999;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Entity Relationship Diagram</h1>
+        <p class="subtitle">Advanced API Project - Django REST Framework</p>
+        
+        <div class="erd-container">
+            <!-- Author Table -->
+            <div class="table">
+                <div class="table-header">👤 AUTHOR</div>
+                <div class="table-body">
+                    <div class="table-row">
+                        <span class="key-badge">PK</span>
+                        <span class="field-name">id</span>
+                        <span class="field-type">INTEGER</span>
+                    </div>
+                    <div class="table-row">
+                        <span class="field-name">name</span>
+                        <span class="field-type">VARCHAR(255)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Relationship -->
+            <div class="relationship">
+                <span class="relationship-label">1 : N</span>
+                <div class="relationship-line"></div>
+                <span class="relationship-label">has many</span>
+            </div>
+            
+            <!-- Book Table -->
+            <div class="table">
+                <div class="table-header">📚 BOOK</div>
+                <div class="table-body">
+                    <div class="table-row">
+                        <span class="key-badge">PK</span>
+                        <span class="field-name">id</span>
+                        <span class="field-type">INTEGER</span>
+                    </div>
+                    <div class="table-row">
+                        <span class="field-name">title</span>
+                        <span class="field-type">VARCHAR(255)</span>
+                    </div>
+                    <div class="table-row">
+                        <span class="field-name">publication_year</span>
+                        <span class="field-type">INTEGER</span>
+                    </div>
+                    <div class="table-row">
+                        <span class="key-badge fk">FK</span>
+                        <span class="field-name">author_id</span>
+                        <span class="field-type">INTEGER</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="api-section">
+            <h2>🔌 API Endpoints</h2>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Endpoint</th>
+                        <th>Method</th>
+                        <th>Description</th>
+                        <th>Auth</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>/api/books/</code></td>
+                        <td><span class="method get">GET</span></td>
+                        <td>List all books (with filtering, search, ordering)</td>
+                        <td class="auth-no">No</td>
+                    </tr>
+                    <tr>
+                        <td><code>/api/books/&lt;id&gt;/</code></td>
+                        <td><span class="method get">GET</span></td>
+                        <td>Retrieve a specific book by ID</td>
+                        <td class="auth-no">No</td>
+                    </tr>
+                    <tr>
+                        <td><code>/api/books/create/</code></td>
+                        <td><span class="method post">POST</span></td>
+                        <td>Create a new book</td>
+                        <td class="auth-yes">✓ Yes</td>
+                    </tr>
+                    <tr>
+                        <td><code>/api/books/update/&lt;id&gt;/</code></td>
+                        <td><span class="method put">PUT/PATCH</span></td>
+                        <td>Update an existing book</td>
+                        <td class="auth-yes">✓ Yes</td>
+                    </tr>
+                    <tr>
+                        <td><code>/api/books/delete/&lt;id&gt;/</code></td>
+                        <td><span class="method delete">DELETE</span></td>
+                        <td>Delete a book</td>
+                        <td class="auth-yes">✓ Yes</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="footer">
+            Advanced API Project © 2026 | Django REST Framework
+        </div>
+    </div>
+</body>
+</html>
