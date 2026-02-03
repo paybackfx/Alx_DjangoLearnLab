@@ -78,6 +78,13 @@ class BookAPITestCase(APITestCase):
         # Initialize API client
         self.client = APIClient()
     
+    def authenticate_user(self):
+        """
+        Helper method to authenticate the test user.
+        Uses self.client.login for session-based authentication.
+        """
+        self.client.login(username='testuser', password='testpass123')
+    
     # ==================== LIST TESTS ====================
     
     def test_list_books_unauthenticated(self):
@@ -90,7 +97,7 @@ class BookAPITestCase(APITestCase):
     
     def test_list_books_authenticated(self):
         """Test that authenticated users can list books."""
-        self.client.force_authenticate(user=self.user)
+        self.client.login(username='testuser', password='testpass123')
         url = reverse('book-list')
         response = self.client.get(url)
         
@@ -119,7 +126,7 @@ class BookAPITestCase(APITestCase):
     
     def test_create_book_authenticated(self):
         """Test that authenticated users can create a book."""
-        self.client.force_authenticate(user=self.user)
+        self.client.login(username='testuser', password='testpass123')
         url = reverse('book-create')
         data = {
             'title': 'New Book',
@@ -148,7 +155,7 @@ class BookAPITestCase(APITestCase):
     
     def test_create_book_future_year_validation(self):
         """Test that creating a book with future publication year fails."""
-        self.client.force_authenticate(user=self.user)
+        self.client.login(username='testuser', password='testpass123')
         url = reverse('book-create')
         data = {
             'title': 'Future Book',
@@ -162,7 +169,7 @@ class BookAPITestCase(APITestCase):
     
     def test_create_book_missing_fields(self):
         """Test that creating a book with missing required fields fails."""
-        self.client.force_authenticate(user=self.user)
+        self.client.login(username='testuser', password='testpass123')
         url = reverse('book-create')
         data = {'title': 'Incomplete Book'}  # Missing required fields
         response = self.client.post(url, data, format='json')
@@ -173,7 +180,7 @@ class BookAPITestCase(APITestCase):
     
     def test_update_book_authenticated(self):
         """Test that authenticated users can update a book."""
-        self.client.force_authenticate(user=self.user)
+        self.client.login(username='testuser', password='testpass123')
         url = reverse('book-update', kwargs={'pk': self.book1.pk})
         data = {
             'title': 'Updated Python Programming',
@@ -189,7 +196,7 @@ class BookAPITestCase(APITestCase):
     
     def test_partial_update_book_authenticated(self):
         """Test that authenticated users can partially update a book."""
-        self.client.force_authenticate(user=self.user)
+        self.client.login(username='testuser', password='testpass123')
         url = reverse('book-update', kwargs={'pk': self.book1.pk})
         data = {'title': 'Partially Updated Title'}
         response = self.client.patch(url, data, format='json')
@@ -209,7 +216,7 @@ class BookAPITestCase(APITestCase):
     
     def test_update_book_future_year_validation(self):
         """Test that updating a book with future year fails."""
-        self.client.force_authenticate(user=self.user)
+        self.client.login(username='testuser', password='testpass123')
         url = reverse('book-update', kwargs={'pk': self.book1.pk})
         data = {
             'title': 'Updated Book',
@@ -224,7 +231,7 @@ class BookAPITestCase(APITestCase):
     
     def test_delete_book_authenticated(self):
         """Test that authenticated users can delete a book."""
-        self.client.force_authenticate(user=self.user)
+        self.client.login(username='testuser', password='testpass123')
         url = reverse('book-delete', kwargs={'pk': self.book1.pk})
         response = self.client.delete(url)
         
@@ -243,7 +250,7 @@ class BookAPITestCase(APITestCase):
     
     def test_delete_nonexistent_book(self):
         """Test that deleting a non-existent book returns 404."""
-        self.client.force_authenticate(user=self.user)
+        self.client.login(username='testuser', password='testpass123')
         url = reverse('book-delete', kwargs={'pk': 9999})
         response = self.client.delete(url)
         
