@@ -138,6 +138,9 @@ LOGIN_URL = 'login'
 # ==================== SECURITY SETTINGS ====================
 
 # ---------- HTTPS and SSL Settings ----------
+# Trust the X-Forwarded-Proto header from reverse proxy for HTTPS detection
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Redirect all non-HTTPS requests to HTTPS
 SECURE_SSL_REDIRECT = True
 
