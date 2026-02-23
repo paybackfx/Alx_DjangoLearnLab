@@ -15,10 +15,15 @@ class ProfileUpdateForm(forms.ModelForm):
         model = User
         fields = ['username', 'email']
 
+from taggit.forms import TagWidget
+
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'content', 'tags']
+        widgets = {
+            'tags': TagWidget(),
+        }
 
 from .models import Comment
 class CommentForm(forms.ModelForm):
